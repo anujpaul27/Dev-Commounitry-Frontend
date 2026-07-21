@@ -1,354 +1,185 @@
-"use client";
+'use client';
 
-/**
- * BannerV3 — "Aurora Glass"
- * Updated: Mobile Responsive + 2s Auto Slide
- */
+import React, { useState } from 'react';
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { motion, useMotionValue, animate } from "framer-motion";
-import { Button, Chip } from "@heroui/react";
-import { ArrowRight, TrendingUp, Cpu, Telescope } from "lucide-react";
-import Link from "next/link";
+const CodeReviewHero = () => {
+  const [code, setCode] = useState('');
+  const [review, setReview] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-const slides = [
-  {
-    id: 0,
-    chip: "Startup Ecosystem",
-    icon: TrendingUp,
-    headline: "The Decade of the Founder",
-    body: "More startups were founded in the last 3 years than in the entire 2000s. The tools, capital, and talent pipelines have never been more accessible to first-time builders.",
-    cta: "Explore Ideas",
-    aurora1: "#F472B6",
-    aurora2: "#A78BFA",
-    aurora3: "#38BDF8",
-    chipBg: "rgba(244,114,182,0.15)",
-    chipColor: "#F472B6",
-  },
-  {
-    id: 1,
-    chip: "Deep Tech",
-    icon: Cpu,
-    headline: "Hardware Is Eating the World",
-    body: "Robotics, synthetic biology, and quantum computing are entering commercial readiness simultaneously. The next trillion-dollar companies will be atoms, not bits.",
-    cta: "Explore Ideas",
-    aurora1: "#34D399",
-    aurora2: "#60A5FA",
-    aurora3: "#A78BFA",
-    chipBg: "rgba(52,211,153,0.15)",
-    chipColor: "#34D399",
-  },
-  {
-    id: 2,
-    chip: "Future Vision",
-    icon: Telescope,
-    headline: "10-Year Bets Pay 100-Year Dividends",
-    body: "The founders who will define the 2030s are already working in obscurity today — building infrastructure the world doesn't know it needs yet. Will you be one of them?",
-    cta: "Explore Ideas",
-    aurora1: "#FB923C",
-    aurora2: "#FBBF24",
-    aurora3: "#34D399",
-    chipBg: "rgba(251,146,60,0.15)",
-    chipColor: "#FB923C",
-  },
-];
+  const handleReview = async () => {
+    if (!code.trim()) {
+      setError('Please enter some code first!');
+      return;
+    }
 
-export default function BannerV3() {
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const x = useMotionValue(0);
-  const containerRef = useRef(null);
+    setError('');
+    setIsLoading(true);
+    setReview('');
 
-  // Responsive Card Width
-  const CARD_WIDTH =
-    typeof window !== "undefined" && window.innerWidth < 768 ? 340 : 520;
-  const GAP =
-    typeof window !== "undefined" && window.innerWidth < 768 ? 16 : 20;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1600));
 
-  const goTo = useCallback(
-    (idx: any) => {
-      setActive(idx);
-      animate(x, -idx * (CARD_WIDTH + GAP), {
-        type: "spring",
-        stiffness: 260,
-        damping: 32,
-      });
-    },
-    [x, CARD_WIDTH, GAP],
-  );
+    const mockReview = `✅ **Code Review Complete**
 
-  const next = useCallback(
-    () => goTo((active + 1) % slides.length),
-    [active, goTo],
-  );
-  const prev = useCallback(
-    () => goTo((active - 1 + slides.length) % slides.length),
-    [active, goTo],
-  );
+**Overall Score:** 8.7/10
 
-  // Auto slide every 2 seconds
-  useEffect(() => {
-    if (paused) return;
-    const t = setInterval(next, 3000);
-    return () => clearInterval(t);
-  }, [next, paused]);
+### Strengths:
+- Clean code structure and formatting
+- Good variable naming conventions
+- Helpful comments included
 
-  const slide = slides[active];
+### Areas for Improvement:
+- Consider using early returns for better readability
+- Add more robust error handling
+- Some functions could be broken into smaller, focused ones
+
+**Suggestions:**
+\`\`\`typescript
+// Improved example
+if (!user) return null;
+
+const handleSubmit = async () => {
+  try {
+    // ...
+  } catch (error) {
+    console.error('Submission failed:', error);
+  }
+};
+\`\`\``;
+
+    setReview(mockReview);
+    setIsLoading(false);
+  };
 
   return (
-    <section
-      className="relative w-full overflow-hidden transition-colors duration-700"
-      style={{ minHeight: "clamp(520px, 85vh, 720px)" }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=DM+Mono:wght@400;500&display=swap');
-        .v3-display { font-family: 'Bricolage Grotesque', sans-serif; }
-        .v3-mono { font-family: 'DM Mono', monospace; }
-        @keyframes auroraShift { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(5%,3%) scale(1.06)} 66%{transform:translate(-4%,5%) scale(0.97)} }
-        .aurora-blob { animation: auroraShift 12s ease-in-out infinite; }
-      `}</style>
+    <div className="hero min-h-[90vh] bg-gradient-to-br from-base-200 via-base-100 to-base-200">
+      <div className="hero-content w-full max-w-7xl px-4 py-5">
+        <div className="w-full">
+          {/* Header */}
+          <div className="text-center lg:block hidden  mb-5">
+            <div className="inline-flex items-center gap-3 bg-primary/10 text-primary px-6  rounded-full mb-4">
+              <span className="text-md ">✦</span>
+              <span className="font-semibold text-sm tracking-widest">POWERED BY AI</span>
+            </div>
+            <h1 className="lg:text-4xl text-xs   font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Smart Code Reviewer
+            </h1>
+            <p className="lg:text-sm text-xs text-base-content/70 max-w-2xl mx-auto">
+              Paste your code, get instant professional feedback from AI.
+            </p>
+          </div>
 
-      {/* Aurora Background */}
-      <motion.div
-        key={`bg-${active}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, #08090f 0%, #0f1118 50%, #08090f 100%)",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:hidden" />
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Left: Premium Code Input */}
+            <div className="flex-1">
+              <div className="card bg-gradient-to-br from-base-100 to-base-200 border border-base-300 shadow-2xl h-full min-h-[520px] overflow-hidden">
+                {/* Premium Header */}
+                <div className="lg:px-8 lg:pt-8 lg:pb-6 border-b border-base-300 bg-base-100/80">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-violet-500 flex items-center justify-center text-white text-2xl shadow-inner">
+                      💻
+                    </div>
+                    <div>
+                      <h2 className="lg:text-2xl text-md  font-bold">Submit Your Code</h2>
+                      <p className="text-base-content/60 lg:text-sm text-xs ">Support for JavaScript, TypeScript, Python, Java, and more</p>
+                    </div>
+                  </div>
+                </div>
 
-        <div
-          className="aurora-blob absolute"
-          style={{
-            top: "-30%",
-            left: "-10%",
-            width: "70%",
-            height: "80%",
-            background: `radial-gradient(ellipse, ${slide.aurora1}28 0%, transparent 65%)`,
-          }}
-        />
-        <div
-          className="aurora-blob absolute"
-          style={{
-            top: "10%",
-            right: "-15%",
-            width: "65%",
-            height: "75%",
-            background: `radial-gradient(ellipse, ${slide.aurora2}22 0%, transparent 60%)`,
-            animationDelay: "-4s",
-          }}
-        />
-        <div
-          className="aurora-blob absolute"
-          style={{
-            bottom: "-20%",
-            left: "30%",
-            width: "55%",
-            height: "60%",
-            background: `radial-gradient(ellipse, ${slide.aurora3}18 0%, transparent 55%)`,
-            animationDelay: "-8s",
-          }}
-        />
-      </motion.div>
+                <div className="  flex-1 flex flex-col">
+                  <textarea
+                    className="textarea w-full font-mono text-sm flex-1 bg-base-100 border-2  border-blue-400 focus:border-primary resize-none min-h-[340px]  rounded-2xl shadow-inner"
+                    placeholder="// Paste your code here..." 
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                  />
 
-      {/* Dot Mesh */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none dark:hidden"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-      />
-
-      <div className="relative z-10 h-full flex flex-col items-center justify-center py-10 px-4 md:px-6">
-        {/* Top Label */}
-        <motion.div
-          key={active}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="v3-mono text-[10px] md:text-[11px] text-zinc-400 dark:text-white/30 uppercase tracking-[0.2em] mb-6 md:mb-8"
-        >
-          Innovation Signal — {String(active + 1).padStart(2, "0")} of{" "}
-          {String(slides.length).padStart(2, "0")}
-        </motion.div>
-
-        {/* Carousel Container */}
-        <div
-          ref={containerRef}
-          className="relative w-full overflow-visible"
-          style={{ height: "clamp(260px, 42vh, 360px)" }}
-        >
-          <motion.div
-            className="absolute flex"
-            style={{
-              x,
-              gap: GAP,
-              left: `calc(50% - ${CARD_WIDTH / 2}px)`,
-            }}
-          >
-            {slides.map((s, i) => {
-              const dist = i - active;
-              const Icon = s.icon;
-
-              return (
-                <motion.div
-                  key={s.id}
-                  onClick={() => goTo(i)}
-                  animate={{
-                    scale: dist === 0 ? 1 : 0.88,
-                    opacity: dist === 0 ? 1 : 0.45,
-                    rotateY: dist === 0 ? 0 : dist > 0 ? -8 : 8,
-                    filter: dist === 0 ? "blur(0px)" : "blur(1px)",
-                  }}
-                  transition={{ type: "spring", stiffness: 240, damping: 28 }}
-                  className="relative cursor-pointer shrink-0 rounded-3xl overflow-hidden"
-                  style={{
-                    width: CARD_WIDTH,
-                    height: "100%",
-                    background: "rgba(255,255,255,0.08)",
-                    backdropFilter: "blur(24px)",
-                    WebkitBackdropFilter: "blur(24px)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    boxShadow:
-                      dist === 0
-                        ? `0 0 80px ${s.aurora1}25, 0 0 40px ${s.aurora2}15, 0 24px 60px rgba(0,0,0,0.5)`
-                        : "none",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-white/70 dark:bg-white/5 backdrop-blur-2xl dark:backdrop-blur-3xl rounded-3xl" />
-
-                  {dist === 0 && (
-                    <div
-                      className="absolute inset-0 rounded-3xl pointer-events-none"
-                      style={{
-                        background: `radial-gradient(ellipse 80% 50% at 20% 0%, ${s.aurora1}18, transparent)`,
-                      }}
-                    />
+                  {error && (
+                    <p className="text-error text-sm mt-3 flex items-center gap-2">
+                      ⚠️ {error}
+                    </p>
                   )}
 
-                  <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-9">
-                    <div>
-                      <div className="flex items-center gap-3 mb-5">
-                        <div
-                          className="w-8 h-8 md:w-9 md:h-9 rounded-xl flex items-center justify-center"
-                          style={{
-                            background: s.chipBg,
-                            border: `1px solid ${s.chipColor}30`,
-                          }}
-                        >
-                          <Icon size={15} style={{ color: s.chipColor }} />
-                        </div>
-                        <Chip
-                          size="sm"
-                          style={{
-                            background: s.chipBg,
-                            color: s.chipColor,
-                            border: `1px solid ${s.chipColor}30`,
-                            fontFamily: "DM Mono, monospace",
-                            fontSize: 11,
-                          }}
-                        >
-                          {s.chip}
-                        </Chip>
-                      </div>
+                  <button
+                    onClick={handleReview}
+                    disabled={isLoading || !code.trim()}
+                    className="mt-8 btn btn-primary btn-lg text-lg font-semibold h-16 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-3 group"
+                  >
+                    {isLoading ? (
+                      <>
+                        <span className="loading loading-spinner loading-md"></span>
+                        Analyzing with AI...
+                      </>
+                    ) : (
+                      <>
+                        Review My Code
+                        <span className="group-hover:translate-x-1 transition">→</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
 
-                      <h3
-                        className="v3-display font-extrabold text-zinc-900 dark:text-white leading-tight"
-                        style={{ fontSize: "clamp(20px, 3.8vw, 38px)" }}
-                      >
-                        {s.headline}
-                      </h3>
-
-                      <p
-                        className="mt-4 text-zinc-600 dark:text-white/60 leading-relaxed text-[13px] md:text-[14px]"
-                        style={{ fontFamily: "DM Mono, monospace" }}
-                      >
-                        {s.body}
-                      </p>
+            {/* Right: Review Output */}
+            <div className="flex-1">
+              <div className="card bg-base-100 shadow-2xl h-full min-h-[520px] border border-base-200">
+                <div className="card-body p-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-2xl">📋</div>
+                      <h2 className="card-title text-2xl">AI Code Review</h2>
                     </div>
-
-                    {dist === 0 && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.25 }}
+                    
+                    {review && (
+                      <button
+                        onClick={() => setReview('')}
+                        className="btn btn-ghost btn-sm text-base-content/60 hover:text-error"
                       >
-                        <Button
-                          size="md"
-                          className="rounded-xl font-semibold border-0 text-white h-10 md:h-11 px-5 md:px-6 text-sm md:text-base"
-                          style={{
-                            background: `linear-gradient(135deg, ${s.aurora1}, ${s.aurora2})`,
-                            fontFamily: "Bricolage Grotesque, sans-serif",
-                          }}
-                        >
-                          <Link href={"/ideas"}>{s.cta}</Link>
-                          <ArrowRight size={15} />
-                        </Button>
-                      </motion.div>
+                        Clear
+                      </button>
                     )}
                   </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
 
-        {/* Dots */}
-        <div className="flex items-center gap-2 md:gap-3 mt-8 md:mt-10">
-          {slides.map((s, i) => (
-            <button
-              key={s.id}
-              onClick={() => goTo(i)}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: i === active ? 32 : 8,
-                height: 8,
-                background:
-                  i === active
-                    ? `linear-gradient(90deg, ${slide.aurora1}, ${slide.aurora2})`
-                    : "rgba(0,0,0,0.15)",
-              }}
-            />
-          ))}
-        </div>
+                  <div className="flex-1 overflow-auto pr-2 custom-scrollbar">
+                    {!review && !isLoading && (
+                      <div className="h-full flex flex-col items-center justify-center text-center py-20 opacity-75">
+                        <div className="text-[120px] mb-6">🤖</div>
+                        <h3 className="text-2xl font-semibold mb-3">Review will appear here</h3>
+                        <p className="max-w-xs text-base-content/60">
+                          Submit code from the left panel to get detailed AI-powered analysis
+                        </p>
+                      </div>
+                    )}
 
-        {/* Navigation Arrows - Hidden on very small screens or made smaller */}
-        <div className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-20">
-          <button
-            onClick={prev}
-            className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 backdrop-blur-xl hover:bg-white/20 transition-colors"
-          >
-            <ArrowRight
-              size={16}
-              className="text-zinc-800 dark:text-white rotate-180"
-            />
-          </button>
-        </div>
-        <div className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-20">
-          <button
-            onClick={next}
-            className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 backdrop-blur-xl hover:bg-white/20 transition-colors"
-          >
-            <ArrowRight size={16} className="text-zinc-800 dark:text-white" />
-          </button>
+                    {isLoading && (
+                      <div className="h-full flex flex-col items-center justify-center py-20">
+                        <div className="loading loading-spinner loading-lg mb-8 text-primary"></div>
+                        <p className="text-xl font-medium">AI is analyzing your code...</p>
+                        <p className="text-sm text-base-content/60 mt-2">This usually takes 2-3 seconds</p>
+                      </div>
+                    )}
+
+                    {review && (
+                      <div className="prose prose-base max-w-none dark:prose-invert">
+                        <div className="bg-base-200/50 p-6 rounded-2xl">
+                          {review.split('\n').map((line, i) => (
+                            <p key={i} className="whitespace-pre-wrap">{line}</p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
-}
+};
+
+export default CodeReviewHero;
