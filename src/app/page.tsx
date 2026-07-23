@@ -6,7 +6,7 @@ import TrendingIdeasPage from "@/Component/TrendingPage";
 export default function Home() {
   
   return (
-    <div>
+    <div className="">
       <Hero/>
       <TrendingIdeasPage/>
       <HowItWorks/>
