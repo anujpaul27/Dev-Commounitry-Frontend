@@ -15,7 +15,7 @@ export default function Footer() {
               <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
                 <Lightbulb className="w-5 h-5 text-white" />
               </div>
-              <span className="text-2xl font-bold">ThinkShare</span>
+              <span className="text-2xl font-bold">Dev Community </span>
             </div>
             <p className="text-base-content/70 text-sm leading-relaxed max-w-xs">
               A community platform where innovative startup ideas are shared,

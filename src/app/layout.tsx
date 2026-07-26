@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: 'ThinkShare',
+  title: 'Dev Community',
   description: 'This is the best idea share platform '
 }
 

@@ -1,142 +1,274 @@
-# ThinkShare - Client Site
+***
 
-A modern, interactive client-side application for ThinkShare, enabling users to share ideas, collaborate, and connect with others in real-time.
+# 📸 Project Preview
 
-## 🌐 Live Demo
+![AI Code Review](./images/Home.jpg)
 
-**[Visit ThinkShare Live](https://think-share-amber.vercel.app/)**
+***
 
----
+# 🏗️ System Architecture
 
-## ✨ Key Features
-
-- **📝 Real-Time Idea Sharing**: Share your thoughts and ideas instantly with the community and watch them spread across the platform.
-
-- **💬 Interactive Discussion Threads**: Engage in meaningful conversations with threaded comments, replies, and community feedback on shared ideas.
-
-- **👥 User Collaboration Tools**: Connect with other innovators, follow profiles, and build a network of like-minded thinkers and creators.
-
-- **🎨 Intuitive User Interface**: Enjoy a clean, responsive design that works seamlessly on desktop, tablet, and mobile devices for an optimal user experience.
-
-- **⚡ Lightning-Fast Performance**: Experience blazing-fast load times and smooth interactions thanks to optimized JavaScript and modern web practices.
-
----
-
-## 🛠️ Tech Stack
-
-- **Frontend Framework**: Next.js
-- **Backend Framework**: Express.js, MongoDB, Node.js 
-- **Styling**: DaisyUI, HeroUI
-- **Architecture**: Client-side rendering with modern web standards
-- **Responsive Design**: Mobile-first approach for all devices
-
----
-
-## 📋 Getting Started
-
-### Prerequisites
-- Node.js (v14 or higher)
-- npm package manager
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/anujpaul27/ThinkShare-Client_Site.git
-cd ThinkShare-Client_Site
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm start
-```
-
-4. Open your browser and navigate to:
-```
-http://localhost:3000
+```text
+                        User
+                          │
+                          ▼
+              ┌────────────────────┐
+              │   Next.js Frontend │
+              │ React • TypeScript │
+              └──────────┬─────────┘
+                         │
+                    REST API
+                         │
+                         ▼
+             ┌─────────────────────┐
+             │   Express Backend   │
+             │ Authentication API  │
+             └──────────┬──────────┘
+                        │
+        ┌───────────────┼────────────────┐
+        │               │                │
+        ▼               ▼                ▼
+ Better Auth       MongoDB         Gemini AI API
+ Authentication     Database       Code Review
+        │               │                │
+        └───────────────┴────────────────┘
+                        │
+                        ▼
+                 JSON Response
+                        │
+                        ▼
+                  Next.js Frontend
 ```
 
 ---
 
-## 📁 Project Structure
+# 🧩 Application Flow
 
+```text
+User
+ │
+ ▼
+Login / Register
+ │
+ ▼
+Authentication (Better Auth)
+ │
+ ▼
+JWT Session Created
+ │
+ ▼
+Dashboard
+ │
+ ├──────────────┐
+ │              │
+ ▼              ▼
+Ideas        AI Review
+ │              │
+ ▼              ▼
+MongoDB     Gemini API
+ │              │
+ └──────┬───────┘
+        ▼
+ Render Updated UI
 ```
-ThinkShare-Client_Site/
-src/
-├── app/
-│   ├── add-idea/
-│   ├── api/
-│   ├── ideas/
-│   ├── login/
-│   ├── my-ideas/
-│   ├── my-interactions/
-│   ├── register/
-│   ├── update/
-│   ├── favicon.ico
-│   ├── globals.css
-│   ├── layout.js
-│   ├── not-found.js
-│   └── page.js
+
+---
+
+# 🗂️ Folder Structure
+
+```text
+src
 │
-├── Component/
+├── app
+│   ├── (auth)
+│   ├── dashboard
+│   ├── community
+│   ├── ideas
+│   ├── api
+│   └── layout.tsx
 │
-├── lib/
+├── components
+│   ├── ui
+│   ├── shared
+│   ├── cards
+│   ├── forms
+│   └── navbar
 │
-└── proxy.js
-
+├── hooks
+├── lib
+├── providers
+├── services
+├── types
+├── utils
+├── constants
+└── middleware.ts
 ```
 
 ---
 
-## 🚀 Deployment
+# 🔄 Request Lifecycle
 
-This site is deployed and hosted on **Vercel** for optimal performance and reliability.
-
-### Deploy Your Own
-1. Connect your GitHub repository to Vercel
-2. Set build command: `npm run build` (if applicable)
-3. Set publish directory: `./` or `./public` (depending on your build output)
-4. Deploy and enjoy your live site!
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! To contribute:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 💡 Support
-
-Have questions or suggestions? Feel free to open an issue on GitHub or reach out to the community.
+```text
+Browser
+   │
+   ▼
+Next.js Route
+   │
+   ▼
+API Service
+   │
+   ▼
+Express API
+   │
+   ▼
+Controller
+   │
+   ▼
+MongoDB
+   │
+   ▼
+JSON Response
+   │
+   ▼
+SWR Cache
+   │
+   ▼
+React UI Update
+```
 
 ---
 
-## 🎯 Future Enhancements
+# 📡 REST API Documentation
 
-- Dark mode toggle
-- Advanced search and filtering
-- User Specific feature
-- User analytics dashboard
-- Mobile app version
+## Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/login` | Login user |
+| POST | `/api/auth/register` | Register user |
+| POST | `/api/auth/logout` | Logout user |
 
 ---
 
-**Made with ❤️ by the ThinkShare Team**
+## Ideas
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/ideas` | Get all ideas |
+| GET | `/api/ideas/:id` | Get single idea |
+| POST | `/api/ideas` | Create new idea |
+| PATCH | `/api/ideas/:id` | Update idea |
+| DELETE | `/api/ideas/:id` | Delete idea |
+
+---
+
+## Comments
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/comments/:ideaId` | Get comments |
+| POST | `/api/comments` | Add comment |
+| DELETE | `/api/comments/:id` | Delete comment |
+
+---
+
+## AI
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/ai/review` | Review source code using Gemini AI |
+
+---
+
+# 📦 API Request Example
+
+### Create New Idea
+
+```http
+POST /api/ideas
+Content-Type: application/json
+Authorization: Bearer <token>
+```
+
+### Request
+
+```json
+{
+  "title": "React Performance Tips",
+  "description": "Best practices for optimizing React applications.",
+  "tags": ["React", "Performance"]
+}
+```
+
+### Success Response
+
+```json
+{
+  "success": true,
+  "message": "Idea created successfully",
+  "data": {
+    "_id": "6884abc12345",
+    "title": "React Performance Tips"
+  }
+}
+```
+
+---
+
+# 🔐 Authentication Flow
+
+```text
+User Login
+     │
+     ▼
+Better Auth
+     │
+     ▼
+Validate Credentials
+     │
+     ▼
+Generate JWT
+     │
+     ▼
+Store Session
+     │
+     ▼
+Protected Routes
+```
+
+---
+
+# 🚀 Deployment Architecture
+
+```text
+                 GitHub
+                    │
+                    ▼
+               Vercel Deploy
+                    │
+     ┌──────────────┴──────────────┐
+     │                             │
+     ▼                             ▼
+ Next.js Frontend           Express Backend
+     │                             │
+     └──────────────┬──────────────┘
+                    ▼
+                 MongoDB Atlas
+```
+
+---
+
+# 📈 Future Improvements
+
+- ✅ Real-time Chat
+- ✅ Notifications
+- ✅ Bookmark Ideas
+- ✅ Rich Text Editor
+- ✅ Image Upload
+- ✅ Email Verification
+- ✅ Docker Support
+- ✅ Unit Testing
+- ✅ CI/CD Pipeline
+- ✅ Admin Analytics Dashboard
+
+---

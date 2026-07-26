@@ -38,7 +38,7 @@ export default function Navbar() {
           <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
             <Lightbulb className="w-5 h-5 text-primary-content" />
           </div>
-          <span className="text-2xl font-bold text-primary">ThinkShare</span>
+          <span className="text-2xl font-bold text-primary">Dev Community</span>
         </Link>
       </div>
 
@@ -54,7 +54,7 @@ export default function Navbar() {
           <li>
             <Link href={`/ideas`} className="flex items-center gap-1.5">
               <Lightbulb className="w-4 h-4" />
-              Explore Idea
+              Dev Idea
             </Link>
           </li>
         </ul>
